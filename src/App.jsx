@@ -13,7 +13,7 @@ function App() {
   return (
     <>
     <Routes>
-      <Route path="/" element={ checkAuth ? <Success/> : <LoginPage loadPage="login" />} />
+      <Route path="/" element={ checkAuth ? <Success /> : <LoginPage loadPage="login" />} />
     </Routes>
     </>
   )

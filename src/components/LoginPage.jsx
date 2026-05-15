@@ -39,23 +39,28 @@ export default function LoginPage(props){
         setThePage((prev) => prev === "login" ? "signup" : "login");
     }
 
-    function submitForm(){
+    async function submitForm(){
         
-        const creds = loginData;
-
+        // const creds = loginData;
+        // console.log("THIS IS CREDS _ " + creds.password + creds.username);
+            
+        console.log("THIS IS LOGOIN DATA - " + loginData.username + loginData.password)
+        
         try{
-
-            const response = axios.post(
+            
+            const response = await axios.post(
                 "https://login-logout-alpha.vercel.app/login",
-                creds
+                loginData
             );
-
-            console.log(response.data);
-
+            
+            console.log(response.status);
+            console.log("We are inside try block");
             setAuth(true);
-
+            
         } catch(err) {
+            console.log("We are inside catch block");
             console.log(err);
+            alert(loginData.password)
             setAuth(false);
         }
 
@@ -66,19 +71,19 @@ export default function LoginPage(props){
         <div className={` ${thePage == "login" ? loginBgDivCss : signupBgDivCss} p-20 rounded-2xl border-2 to-white hover:p-22 transition-all`}>
             <h2 className="justify-self-center text-2xl mb-8 " >{thePage === "signup" ? "SignUP" : "LogIn"}</h2>
 
-            <form action="" className="flex flex-col ">
+            <div className="flex flex-col ">
 
                 {thePage === "signup" && (<input type="text" value={signupData.name} onChange={(e) => setSignupData({...signupData, name: e.target.value})} className={inputClasses} placeholder="name" name="name" required />)}
                 
-                <input type="text" className={`${inputClasses}`} value={thePage === "signup" ? signupData.username : loginData.username} placeholder="username" name="username" required
+                <input type="text" className={`${inputClasses}`} value={thePage === "signup" ? signupData.username : loginData.username} placeholder="username" required
                 onChange={thePage === "signup" ? (e)=>setSignupData({...signupData, username: e.target.value}) : 
                 (e)=>setLoginData({...loginData, username: e.target.value})} />
 
-                <input type="password" className={inputClasses} placeholder="password" name="password" required value={thePage === "signup" ? signupData.password : loginData.password}
+                <input type="password" className={inputClasses} placeholder="password" required value={thePage === "signup" ? signupData.password : loginData.password}
                 onChange={thePage === "signup" ? (e) => setSignupData({...signupData, password: e.target.value}) : (e) => setLoginData({...loginData, password: e.target.value})} />
 
-                <button type="submit" onClick={submitForm} className={` ${thePage == "login" ? loginBtnCss : signupBtnCss} ${submitBtnCss}`}>{thePage}</button>
-            </form>
+                <button onClick={submitForm} className={` ${thePage == "login" ? loginBtnCss : signupBtnCss} ${submitBtnCss}`}>{thePage}</button>
+            </div>
             
             <h2 className="justify-self-center mt-4" >{thePage === "signup" ? "Already have an account? -" : "New here? -"} 
                 <button onClick={setPage} className="cursor-pointer underline underline-offset-2 text-blue-800" >{thePage === "login" ? "SignUP" : "LogIn"}</button>
