@@ -31,21 +31,13 @@ export default function LoginPage(props){
     })
 
     const setAuth = useLogin ((state) => state.setIsAuthenticated);
-
-    // const [username, setUsername] = useState("");
-    // const [password, setPassword] = useState("");
     
     function setPage(){
         setThePage((prev) => prev === "login" ? "signup" : "login");
     }
 
     async function submitForm(){
-        
-        // const creds = loginData;
-        // console.log("THIS IS CREDS _ " + creds.password + creds.username);
-            
-        console.log("THIS IS LOGOIN DATA - " + loginData.username + loginData.password)
-        
+       
         try{
             
             const response = await axios.post(
@@ -54,13 +46,10 @@ export default function LoginPage(props){
             );
             
             console.log(response.status);
-            console.log("We are inside try block");
             setAuth(true);
             
         } catch(err) {
-            console.log("We are inside catch block");
             console.log(err);
-            alert(loginData.password)
             setAuth(false);
         }
 
