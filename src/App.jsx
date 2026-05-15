@@ -1,11 +1,20 @@
-import './App.css'
-import LoginPage from './components/LoginPage'
+import { Route, Routes } from 'react-router';
+import './App.css';
+import LoginPage from './components/LoginPage';
+import Success from './components/Success';
+import useLogin from './store/useLogin';
 
 function App() {
 
+  const checkAuth = useLogin((state) => state.isAuthenticated);
+
+  console.log(checkAuth);
+
   return (
     <>
-      <LoginPage />
+    <Routes>
+      <Route path="/" element={ checkAuth ? <Success/> : <LoginPage loadPage="login" />} />
+    </Routes>
     </>
   )
 }

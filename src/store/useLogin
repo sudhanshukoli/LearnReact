@@ -1,0 +1,10 @@
+import { create } from "zustand";
+
+const useLogin = create( (set) => ({
+
+    isAuthenticated : false,
+    setIsAuthenticated : (value) => set ({isAuthenticated : value})
+
+}) )
+
+export default useLogin;
